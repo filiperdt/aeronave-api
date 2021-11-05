@@ -94,7 +94,7 @@ public class AeronaveController {
 		return responseEntity;
 	}
 	
-	@GetMapping("/aeronaves/find/{termo}")
+	@GetMapping("/find/{termo}")
 	@ResponseBody
 	public ResponseEntity<?> listarPorParametro(@PathVariable String termo) {
 		ResponseEntity<?> responseEntity = aeronaveService.listarPorParametro(termo);

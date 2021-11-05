@@ -10,9 +10,7 @@ import br.com.aeronave.aeronave.model.Aeronave;
 
 @Repository
 public interface AeronaveRepository extends JpaRepository<Aeronave, Long> {
-	
-	List<Aeronave> findAllByOrderById();
-	
+
 	@Query("SELECT COUNT(a) FROM Aeronave a WHERE a.vendido = false")
 	Long countVendidoFalse();
 	
@@ -26,5 +24,6 @@ public interface AeronaveRepository extends JpaRepository<Aeronave, Long> {
 			value = "SELECT * FROM aeronave.aeronave a WHERE a.created BETWEEN CURRENT_DATE -7 AND CURRENT_DATE")
 	Long countRegistradaEstaSemana();
 	
-	List<Aeronave> findByNomeContainingOrderById(String termo);
+	@Query("SELECT a FROM Aeronave a WHERE unaccent(UPPER(a.nome)) LIKE unaccent(UPPER(?1))")
+	List<Aeronave> listAllByNomeContaining(String termo);
 }

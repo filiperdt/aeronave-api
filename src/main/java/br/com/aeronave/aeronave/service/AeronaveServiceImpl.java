@@ -27,7 +27,7 @@ public class AeronaveServiceImpl implements AeronaveService {
 		msgResposta.put("erro", erro);
 		return new ResponseEntity<JSONObject>(msgResposta, httpStatus);
 	}
-		
+	
 	public List<AeronaveResponseDto> listAll() {
 		List<Aeronave> aeronaves = aeronaveRepository.findAll();
 		List<AeronaveResponseDto> aeronavesDto = new ArrayList<>();
@@ -144,7 +144,7 @@ public class AeronaveServiceImpl implements AeronaveService {
 
 	@Override
 	public ResponseEntity<?> listarPorParametro(String termo) {
-		
-		return null;
+		List<Aeronave> aeronaves = aeronaveRepository.listAllByNomeContaining("%"+termo+"%");
+		return new ResponseEntity<List<Aeronave>>(aeronaves, HttpStatus.OK);
 	}
 }
