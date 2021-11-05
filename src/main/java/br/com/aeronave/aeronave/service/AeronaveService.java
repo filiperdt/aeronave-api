@@ -1,14 +1,11 @@
 package br.com.aeronave.aeronave.service;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 
 import br.com.aeronave.aeronave.dto.request.AeronaveRequestDto;
-import br.com.aeronave.aeronave.dto.response.AeronaveResponseDto;
 
 public interface AeronaveService {
-	public List<AeronaveResponseDto> listAll();
+	public ResponseEntity<?> listAll();
 	
 	public ResponseEntity<?> create(AeronaveRequestDto produtoDto);
 
@@ -18,5 +15,13 @@ public interface AeronaveService {
 	
 	public ResponseEntity<?> delete(Long id);
 	
-	public ResponseEntity<?> listarPorParametro(String termo);
+	public ResponseEntity<?> listarTodasPorTermo(String termo);
+	
+	public ResponseEntity<?> contarQtdeNaoVendida();
+	
+	public ResponseEntity<?> listarQtdePorDecada();
+	
+	public ResponseEntity<?> listarQtdePorMarca();
+	
+	public ResponseEntity<?> listarRegistradasUltimaSemana();
 }

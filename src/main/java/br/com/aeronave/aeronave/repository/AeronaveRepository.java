@@ -10,20 +10,19 @@ import br.com.aeronave.aeronave.model.Aeronave;
 
 @Repository
 public interface AeronaveRepository extends JpaRepository<Aeronave, Long> {
-
+	@Query("SELECT a FROM Aeronave a WHERE unaccent(UPPER(a.nome)) LIKE unaccent(UPPER(?1))")
+	List<Aeronave> listarTodasPorTermo(String termo);
+	
 	@Query("SELECT COUNT(a) FROM Aeronave a WHERE a.vendido = false")
-	Long countVendidoFalse();
+	Long contarQtdeNaoVendida();
 	
 	@Query("SELECT a.ano/10*10 AS decada, COUNT(a) AS qtde_aeronave FROM Aeronave a GROUP BY decada")
-	List<Object[]> countPorDecada();
+	List<Object[]> listarQtdePorDecada();
 	
 	@Query("SELECT a.marca, COUNT(a) FROM Aeronave a GROUP BY a.marca")
-	List<Object[]> countPorMarca();
+	List<Object[]> listarQtdePorMarca();
 	
 	@Query(nativeQuery = true,
 			value = "SELECT * FROM aeronave.aeronave a WHERE a.created BETWEEN CURRENT_DATE -7 AND CURRENT_DATE")
-	Long countRegistradaEstaSemana();
-	
-	@Query("SELECT a FROM Aeronave a WHERE unaccent(UPPER(a.nome)) LIKE unaccent(UPPER(?1))")
-	List<Aeronave> listAllByNomeContaining(String termo);
+	List<Aeronave> listarRegistradasUltimaSemana();
 }

@@ -2,7 +2,9 @@ package br.com.aeronave.aeronave.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -25,10 +27,10 @@ public class AeronaveServiceImpl implements AeronaveService {
 	
 	public ResponseEntity<JSONObject> retornaJsonMensagem(JSONObject msgResposta, boolean erro, HttpStatus httpStatus) {
 		msgResposta.put("erro", erro);
-		return new ResponseEntity<JSONObject>(msgResposta, httpStatus);
+		return ResponseEntity.status(httpStatus).body(msgResposta);
 	}
 	
-	public List<AeronaveResponseDto> listAll() {
+	public ResponseEntity<?> listAll() {
 		List<Aeronave> aeronaves = aeronaveRepository.findAll();
 		List<AeronaveResponseDto> aeronavesDto = new ArrayList<>();
 		
@@ -37,7 +39,7 @@ public class AeronaveServiceImpl implements AeronaveService {
 			aeronavesDto.add(aeronaveDto);
 		});
 		
-		return aeronavesDto;
+		return ResponseEntity.ok().body(aeronavesDto);
 	}
 
 	@Transactional
@@ -53,7 +55,7 @@ public class AeronaveServiceImpl implements AeronaveService {
 		
 		Aeronave aeronaveSalvo = this.aeronaveRepository.save(aeronave);
 		AeronaveResponseDto aeronaveResponseDto = mapEntityParaDto(aeronaveSalvo);
-		return new ResponseEntity<AeronaveResponseDto>(aeronaveResponseDto, HttpStatus.CREATED);
+		return ResponseEntity.created(null).body(aeronaveResponseDto);
 	}
 
 	public ResponseEntity<?> read(Long id) {
@@ -61,7 +63,7 @@ public class AeronaveServiceImpl implements AeronaveService {
 		
 		if(optional.isPresent()) {
 			AeronaveResponseDto aeronaveResponseDto = mapEntityParaDto(optional.get());
-			return new ResponseEntity<AeronaveResponseDto>(aeronaveResponseDto, HttpStatus.OK);
+			return ResponseEntity.ok().body(aeronaveResponseDto);
 		} else {
 			JSONObject msgResposta = new JSONObject();
 			msgResposta.put("message", "Aeronave #"+id+" não encontrado no banco de dados!");
@@ -141,10 +143,50 @@ public class AeronaveServiceImpl implements AeronaveService {
 		
 		return aeronave;
 	}
-
+	
 	@Override
-	public ResponseEntity<?> listarPorParametro(String termo) {
-		List<Aeronave> aeronaves = aeronaveRepository.listAllByNomeContaining("%"+termo+"%");
-		return new ResponseEntity<List<Aeronave>>(aeronaves, HttpStatus.OK);
+	public ResponseEntity<?> listarTodasPorTermo(String termo) {
+		List<Aeronave> aeronaves = aeronaveRepository.listarTodasPorTermo("%"+termo+"%");
+		return ResponseEntity.ok().body(aeronaves);
+	}
+	
+	public ResponseEntity<?> contarQtdeNaoVendida() {
+		Long quantidadeNaoVendida = aeronaveRepository.contarQtdeNaoVendida();
+		return ResponseEntity.ok().body(quantidadeNaoVendida);
+	}
+	
+	public ResponseEntity<?> listarQtdePorDecada() {
+		List<Object[]> resultadosObj = aeronaveRepository.listarQtdePorDecada();
+		Map<Integer, Long> resultadosMap = new HashMap<>();
+		Integer decada = null;
+		Long qtde = null;
+		
+		for(Object[] obj : resultadosObj) {
+			decada = (Integer) obj[0];
+			qtde = (Long) obj[1];
+			resultadosMap.put(decada, qtde);
+		}
+		
+		return ResponseEntity.ok().body(resultadosMap);
+	}
+	
+	public ResponseEntity<?> listarQtdePorMarca() {
+		List<Object[]> resultadosObj = aeronaveRepository.listarQtdePorMarca();
+		Map<String, Long> resultadosMap = new HashMap<>();
+		String marca = null;
+		Long qtde = null;
+		
+		for(Object[] obj : resultadosObj) {
+			marca = (String) obj[0];
+			qtde = (Long) obj[1];
+			resultadosMap.put(marca, qtde);
+		}
+		
+		return ResponseEntity.ok().body(resultadosMap);
+	}
+	
+	public ResponseEntity<?> listarRegistradasUltimaSemana() {
+		List<Aeronave> aeronaves = aeronaveRepository.listarRegistradasUltimaSemana();
+		return ResponseEntity.ok().body(aeronaves);
 	}
 }

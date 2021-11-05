@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.aeronave.aeronave.dto.request.AeronaveRequestDto;
-import br.com.aeronave.aeronave.dto.response.AeronaveResponseDto;
 import br.com.aeronave.aeronave.service.AeronaveService;
 import net.minidev.json.JSONObject;
 
@@ -46,14 +44,14 @@ public class AeronaveController {
 		jsonMessages = analisaBindingResult(bindingResult, jsonMessages);
 		jsonMessages.put("erro", true);
 		
-		return new ResponseEntity<JSONObject>(jsonMessages, HttpStatus.BAD_REQUEST);
+		return ResponseEntity.badRequest().body(jsonMessages);
 	}
 	
 	@GetMapping("")
 	@ResponseBody
 	public ResponseEntity<?> listAll() {
-		List<AeronaveResponseDto> aeronavesDto = this.aeronaveService.listAll();
-		return new ResponseEntity<>(aeronavesDto, HttpStatus.OK);
+		ResponseEntity<?> responseEntity = aeronaveService.listAll();
+		return responseEntity;
 	}
 	
 	@PostMapping("")
@@ -96,8 +94,39 @@ public class AeronaveController {
 	
 	@GetMapping("/find/{termo}")
 	@ResponseBody
-	public ResponseEntity<?> listarPorParametro(@PathVariable String termo) {
-		ResponseEntity<?> responseEntity = aeronaveService.listarPorParametro(termo);
+	public ResponseEntity<?> listarTodasPorTermo(@PathVariable String termo) {
+		ResponseEntity<?> responseEntity = aeronaveService.listarTodasPorTermo(termo);
+		return responseEntity;
+	}
+	
+	@GetMapping("/quantidade-nao-vendida")
+	@ResponseBody
+	public ResponseEntity<?> contarQtdeNaoVendida() {
+		ResponseEntity<?> responseEntity = aeronaveService.contarQtdeNaoVendida();
+		return responseEntity;
+	}
+	
+	
+	@GetMapping("/quantidade-por-decada")
+	@ResponseBody
+	public ResponseEntity<?> listarQtdePorDecada() {
+		ResponseEntity<?> responseEntity = aeronaveService.listarQtdePorDecada();
+		return responseEntity;
+	}
+	
+	
+	@GetMapping("/quantidade-por-marca")
+	@ResponseBody
+	public ResponseEntity<?> listarQtdePorMarca() {
+		ResponseEntity<?> responseEntity = aeronaveService.listarQtdePorMarca();
+		return responseEntity;
+	}
+	
+	
+	@GetMapping("/registradas-ultima-semana")
+	@ResponseBody
+	public ResponseEntity<?> listarRegistradasUltimaSemana() {
+		ResponseEntity<?> responseEntity = aeronaveService.listarRegistradasUltimaSemana();
 		return responseEntity;
 	}
 }
