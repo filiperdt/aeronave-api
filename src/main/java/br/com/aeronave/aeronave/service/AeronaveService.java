@@ -24,4 +24,6 @@ public interface AeronaveService {
 	public ResponseEntity<?> listarQtdePorMarca();
 	
 	public ResponseEntity<?> listarRegistradasUltimaSemana();
+	
+	public ResponseEntity<?> listarMarcas();
 }

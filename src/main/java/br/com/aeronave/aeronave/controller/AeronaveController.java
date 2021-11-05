@@ -106,14 +106,12 @@ public class AeronaveController {
 		return responseEntity;
 	}
 	
-	
 	@GetMapping("/quantidade-por-decada")
 	@ResponseBody
 	public ResponseEntity<?> listarQtdePorDecada() {
 		ResponseEntity<?> responseEntity = aeronaveService.listarQtdePorDecada();
 		return responseEntity;
 	}
-	
 	
 	@GetMapping("/quantidade-por-marca")
 	@ResponseBody
@@ -122,11 +120,17 @@ public class AeronaveController {
 		return responseEntity;
 	}
 	
-	
 	@GetMapping("/registradas-ultima-semana")
 	@ResponseBody
 	public ResponseEntity<?> listarRegistradasUltimaSemana() {
 		ResponseEntity<?> responseEntity = aeronaveService.listarRegistradasUltimaSemana();
+		return responseEntity;
+	}
+	
+	@GetMapping("/marcas")
+	@ResponseBody
+	public ResponseEntity<?> listarMarcas() {
+		ResponseEntity<?> responseEntity = aeronaveService.listarMarcas();
 		return responseEntity;
 	}
 }

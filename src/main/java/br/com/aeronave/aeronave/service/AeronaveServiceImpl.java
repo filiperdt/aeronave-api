@@ -2,6 +2,7 @@ package br.com.aeronave.aeronave.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import br.com.aeronave.aeronave.dto.request.AeronaveRequestDto;
 import br.com.aeronave.aeronave.dto.response.AeronaveResponseDto;
 import br.com.aeronave.aeronave.model.Aeronave;
+import br.com.aeronave.aeronave.model.EnumMarca;
 import br.com.aeronave.aeronave.repository.AeronaveRepository;
 import net.minidev.json.JSONObject;
 
@@ -188,5 +190,10 @@ public class AeronaveServiceImpl implements AeronaveService {
 	public ResponseEntity<?> listarRegistradasUltimaSemana() {
 		List<Aeronave> aeronaves = aeronaveRepository.listarRegistradasUltimaSemana();
 		return ResponseEntity.ok().body(aeronaves);
+	}
+	
+	public ResponseEntity<?> listarMarcas() {
+		List<EnumMarca> marcas = Arrays.asList(EnumMarca.values());
+		return ResponseEntity.ok().body(marcas);
 	}
 }
