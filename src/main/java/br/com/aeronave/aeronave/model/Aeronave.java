@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,8 @@ public class Aeronave {
 	@Column(nullable = false)
 	private String nome;
 	@Column(nullable = false)
-	private String marca;
+	@Enumerated(EnumType.STRING)
+	private EnumMarca marca;
 	@Column(nullable = false)
 	private Integer ano;
 	@Column(nullable = false)

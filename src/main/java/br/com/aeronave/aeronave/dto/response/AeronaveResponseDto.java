@@ -2,6 +2,7 @@ package br.com.aeronave.aeronave.dto.response;
 
 import java.time.LocalDateTime;
 
+import br.com.aeronave.aeronave.model.EnumMarca;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import lombok.ToString;
 public class AeronaveResponseDto {
 	private Long id;
 	private String nome;
-	private String marca;
+	private EnumMarca marca;
 	private Integer ano;
 	private String descricao;
 	private boolean vendido;

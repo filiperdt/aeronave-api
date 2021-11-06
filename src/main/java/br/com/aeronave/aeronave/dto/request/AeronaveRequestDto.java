@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import br.com.aeronave.aeronave.model.EnumMarca;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,8 +23,7 @@ public class AeronaveRequestDto {
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 	@NotNull(message = "Marca não pode ser null")
-	@NotBlank(message = "Marca é obrigatório")
-	private String marca;
+	private EnumMarca marca;
 	@NotNull(message = "Ano não pode ser null")
 	@PositiveOrZero(message = "Ano não pode ser negativo")
 	private Integer ano;
