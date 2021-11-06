@@ -68,7 +68,7 @@ public class AeronaveServiceImpl implements AeronaveService {
 			return ResponseEntity.ok().body(aeronaveResponseDto);
 		} else {
 			JSONObject msgResposta = new JSONObject();
-			msgResposta.put("message", "Aeronave #"+id+" não encontrado no banco de dados!");
+			msgResposta.put("message", "Aeronave #"+id+" não encontrada no banco de dados!");
 			return retornaJsonMensagem(msgResposta, true, HttpStatus.NOT_FOUND);
 		}
 	}
@@ -96,7 +96,7 @@ public class AeronaveServiceImpl implements AeronaveService {
 			return ResponseEntity.ok().body(aeronaveResponseDto);
 		}
 		
-		msgResposta.put("message", "Aeronave #"+id+" não encontrado no banco de dados!");
+		msgResposta.put("message", "Aeronave #"+id+" não encontrada no banco de dados!");
 		return retornaJsonMensagem(msgResposta, true, HttpStatus.NOT_FOUND);
 	}
 
@@ -105,17 +105,12 @@ public class AeronaveServiceImpl implements AeronaveService {
 		JSONObject msgResposta = new JSONObject();
 		
 		if(optional.isPresent()) {
-			try {
-				this.aeronaveRepository.deleteById(id);
-				msgResposta.put("message", "Aeronave #"+id+" excluído com sucesso!");
-				return retornaJsonMensagem(msgResposta, false, HttpStatus.OK);
-			} catch(Exception e) {
-				msgResposta.put("message", "Falha na exclusão! Certifique-se de que o aeronave #"+id+" não esteja relacionado em nenhum pedido!");
-				return retornaJsonMensagem(msgResposta, true, HttpStatus.CONFLICT);
-			}
+			aeronaveRepository.deleteById(id);
+			msgResposta.put("message", "Aeronave #"+id+" excluída com sucesso!");
+			return retornaJsonMensagem(msgResposta, false, HttpStatus.OK);
 		}
 		
-		msgResposta.put("message", "Aeronave #"+id+" não encontrado no banco de dados!");
+		msgResposta.put("message", "Aeronave #"+id+" não encontrada no banco de dados!");
 		return retornaJsonMensagem(msgResposta, true, HttpStatus.NOT_FOUND);
 	}
 	
