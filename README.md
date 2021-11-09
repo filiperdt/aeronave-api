@@ -7,6 +7,25 @@ O objetivo desta API REST é gerenciar cadastro de aeronaves.
 
 O projeto faz parte do meu portfólio pessoal.
 
+## Começando
+No PostgreSQL, instale o dicionário de pesquisa de texto unaccent, que remove acentos, com o seguinte comando:
+```
+  CREATE EXTENSION unaccent;
+```
+
+Se você receber um erro como:
+```
+  ERROR: could not open extension control file
+  "/usr/share/postgresql/<version>/extension/unaccent.control": No such file or directory
+```
+
+Instale o pacote "postgresql contrib" em seu servidor de banco de dados, com o seguinte comando:
+```
+  sudo apt-get install postgresql-contrib-9.1
+```
+
+Adapte ao número da sua versão. Aqui está a lista de pacotes atualmente disponíveis (https://packages.debian.org/search?keywords=postgresql-contrib).
+
 ## Rotas
 
 > O caminho base para a API é /aeronave
