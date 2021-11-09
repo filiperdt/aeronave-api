@@ -169,12 +169,12 @@ public class AeronaveServiceImpl implements AeronaveService {
 	
 	public ResponseEntity<?> listarQtdePorMarca() {
 		List<Object[]> resultadosObj = aeronaveRepository.listarQtdePorMarca();
-		Map<String, Long> resultadosMap = new HashMap<>();
-		String marca = null;
+		Map<EnumMarca, Long> resultadosMap = new HashMap<>();
+		EnumMarca marca = null;
 		Long qtde = null;
 		
 		for(Object[] obj : resultadosObj) {
-			marca = (String) obj[0];
+			marca = (EnumMarca) obj[0];
 			qtde = (Long) obj[1];
 			resultadosMap.put(marca, qtde);
 		}
@@ -182,9 +182,9 @@ public class AeronaveServiceImpl implements AeronaveService {
 		return ResponseEntity.ok().body(resultadosMap);
 	}
 	
-	public ResponseEntity<?> listarRegistradasUltimaSemana() {
-		List<Aeronave> aeronaves = aeronaveRepository.listarRegistradasUltimaSemana();
-		return ResponseEntity.ok().body(aeronaves);
+	public ResponseEntity<?> contarQtdeRegistradasUltimaSemana() {
+		Long quantidadeRegistradasUltimaSemana = aeronaveRepository.contarQtdeRegistradasUltimaSemana();
+		return ResponseEntity.ok().body(quantidadeRegistradasUltimaSemana);
 	}
 	
 	public ResponseEntity<?> listarMarcas() {

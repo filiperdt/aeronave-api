@@ -23,6 +23,6 @@ public interface AeronaveRepository extends JpaRepository<Aeronave, Long> {
 	List<Object[]> listarQtdePorMarca();
 	
 	@Query(nativeQuery = true,
-			value = "SELECT * FROM aeronave.aeronave a WHERE a.created BETWEEN now()\\:\\:timestamp - (interval '7d') AND now()\\:\\:timestamp")
-	List<Aeronave> listarRegistradasUltimaSemana();
+			value = "SELECT COUNT(*) FROM aeronave.aeronave a WHERE a.created BETWEEN now()\\:\\:timestamp - (interval '7d') AND now()\\:\\:timestamp")
+	Long contarQtdeRegistradasUltimaSemana();
 }

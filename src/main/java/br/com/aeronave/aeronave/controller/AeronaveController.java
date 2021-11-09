@@ -122,8 +122,8 @@ public class AeronaveController {
 	
 	@GetMapping("/registradas-ultima-semana")
 	@ResponseBody
-	public ResponseEntity<?> listarRegistradasUltimaSemana() {
-		ResponseEntity<?> responseEntity = aeronaveService.listarRegistradasUltimaSemana();
+	public ResponseEntity<?> contarQtdeRegistradasUltimaSemana() {
+		ResponseEntity<?> responseEntity = aeronaveService.contarQtdeRegistradasUltimaSemana();
 		return responseEntity;
 	}
 	
