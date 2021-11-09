@@ -1,7 +1,7 @@
 # aeronave-api
 
 ## Sobre este Projeto
-Este é o back-end do [aeronave-aplicacao](https://github.com/filiperdt/aeronave-aplicacao/tree/master).
+Este é o back-end do [aeronave-aplicacao](https://github.com/filiperdt/aeronave-aplicacao).
 
 O objetivo desta API REST é gerenciar cadastro de aeronaves.
 
