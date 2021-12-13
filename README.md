@@ -1,14 +1,19 @@
-# aeronave-api
+# Cadastro de Aeronaves - API
 
 ## Sobre este Projeto
-Este é o back-end do [aeronave-aplicacao](https://github.com/filiperdt/aeronave-aplicacao).
+Este é o back-end do sistema [Cadastro de Aeronaves - Aplicação](https://github.com/filiperdt/aeronave-aplicacao).
 
 O objetivo desta API REST é gerenciar cadastro de aeronaves.
 
 O projeto faz parte do meu portfólio pessoal.
 
 ## Começando
-No PostgreSQL, instale o dicionário de pesquisa de texto unaccent, que remove acentos, com o seguinte comando:
+
+### Pré-requisitos
+- Java 11.
+- O banco de dados PostgreSQL deve estar instalado e em execução na porta padrão, 5432. A versão do PostgreSQL utilizada no desenvolvimento foi a 12.1.
+- Deve ser criado um banco de dados chamado 'aeronave'. Dentro dele, deve ser criado um schema, também chamado 'aeronave'.
+- No PostgreSQL, instale o dicionário de pesquisa de texto unaccent, que remove acentos, com o seguinte comando:
 ```
   CREATE EXTENSION unaccent;
 ```
@@ -38,12 +43,12 @@ Adapte ao número da sua versão. Aqui está a lista de pacotes atualmente dispo
 
 | ENDPOINT | Método | Parâmetros | Parâmetros de URL | Resposta de Sucesso | Resposta de Erro
 |--|--|--|--|--|--|
-| /aeronaves | `GET`  | - | - |**Code:** 200 - OK<br>**Content:** [ [Aeronave](#valor-de-exemplo-de-resposta) ]  | - |
-| /aeronaves | `POST` | [Aeronave](#parâmetros-de-aeronave) | - |**Code:** 201 - CREATED <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta) |  **Code:** 400 - BAD REQUEST<br>**Content:** [Mensagem de erro 400](#parâmetros-de-resposta-do-erro-400-de-aeronave)|
-| /aeronaves/:id | `GET` | - | id=Long |**Code:** 200 - OK <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta) |  **Code:** 404 - NOT FOUND<br>**Content:** [Mensagem de erro 404](#parâmetros-de-resposta-do-erro-404-de-aeronave)|
-| /aeronaves/:id | `PUT` | [Aeronave](#parâmetros-de-aeronave) | id=Long |**Code:** 200 - OK <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta) | **Code:** 400 - BAD REQUEST<br>**Content:** [Mensagem de erro 400](#parâmetros-de-resposta-do-erro-400-de-aeronave)<br>*or*<br>**Code:** 404 - NOT FOUND<br>**Content:** [Mensagem de erro 404](#parâmetros-de-resposta-do-erro-404-de-aeronave)|
+| /aeronaves | `GET`  | - | - |**Code:** 200 - OK<br>**Content:** [ [Aeronave](#valor-de-exemplo-de-resposta-de-aeronave) ]  | - |
+| /aeronaves | `POST` | [Aeronave](#parâmetros-de-aeronave) | - |**Code:** 201 - CREATED <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta-de-aeronave) |  **Code:** 400 - BAD REQUEST<br>**Content:** [Mensagem de erro 400](#parâmetros-de-resposta-do-erro-400-de-aeronave)|
+| /aeronaves/:id | `GET` | - | id=Long |**Code:** 200 - OK <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta-de-aeronave) |  **Code:** 404 - NOT FOUND<br>**Content:** [Mensagem de erro 404](#parâmetros-de-resposta-do-erro-404-de-aeronave)|
+| /aeronaves/:id | `PUT` | [Aeronave](#parâmetros-de-aeronave) | id=Long |**Code:** 200 - OK <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta-de-aeronave) | **Code:** 400 - BAD REQUEST<br>**Content:** [Mensagem de erro 400](#parâmetros-de-resposta-do-erro-400-de-aeronave)<br>*or*<br>**Code:** 404 - NOT FOUND<br>**Content:** [Mensagem de erro 404](#parâmetros-de-resposta-do-erro-404-de-aeronave)|
 | /aeronaves/:id | `DELETE` | - | id=Long |**Code:** 200 - OK <br> **Content:** [Sucesso na exclusão de Aeronave](#parâmetros-de-sucesso-na-exclusão-de-aeronave) |  **Code:** 404 - NOT FOUND<br>**Content:** [Mensagem de erro 404](#parâmetros-de-resposta-do-erro-404-de-aeronave)|
-| /aeronaves/find/:termo | `GET` | - | termo=String |**Code:** 200 - OK <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta)|
+| /aeronaves/find/:termo | `GET` | - | termo=String |**Code:** 200 - OK <br> **Content:** [Aeronave](#valor-de-exemplo-de-resposta-de-aeronave)|
 | /aeronaves/quantidade-nao-vendida | `GET` | - | - |**Code:** 200 - OK <br> **Content:** Long|
 | /aeronaves/quantidade-por-decada | `GET` | - | - |**Code:** 200 - OK <br> **Content:** <Integer, Long>|
 | /aeronaves/quantidade-por-marca | `GET` | - | - |**Code:** 200 - OK <br> **Content:** <String, Long>|
@@ -63,17 +68,13 @@ Adapte ao número da sua versão. Aqui está a lista de pacotes atualmente dispo
 > - GET /aeronaves/registradas-ultima-semana - Pega a quantidade de Aeronaves registradas na última semana
 
 #### Parâmetros de Aeronave
-nome
+- nome
+- marca
+- ano
+- descricao
+- vendido
 
-marca
-
-ano
-
-descricao
-
-vendido
-
-#### Modelo para requisição
+#### Modelo para requisição de Aeronave
 ```
 Aeronave {
   nome (String, required),
@@ -84,7 +85,7 @@ Aeronave {
 }
 ```
 
-#### Valor de exemplo de requisição
+#### Valor de exemplo de requisição de Aeronave
 ```json
 {
   "nome": "String",
@@ -95,7 +96,7 @@ Aeronave {
 }
 ```
 
-#### Valor de exemplo de resposta
+#### Valor de exemplo de resposta de Aeronave
 ```json
 {
   "id": "Long",
@@ -109,7 +110,7 @@ Aeronave {
 }
 ```
 
-### Conteúdo das respostas de Sucesso e de Erro
+### Conteúdo das respostas de Sucesso e de Erro de Aeronave
 #### Parâmetros de sucesso na exclusão de Aeronave
 > *erro*: false
 
@@ -143,7 +144,7 @@ Os parâmetros abaixo existirão apenas se houver erro no preenchimento de seus 
 > *message*: Seu valor será:
 > - "Aeronave #*id* não encontrada no banco de dados".
 
-#### Possíveis parâmetros das respostas de Sucesso e de Erro
+#### Possíveis parâmetros das respostas de Sucesso e de Erro de Aeronave
 ```
 "erro": "boolean",
 "message": "String",
